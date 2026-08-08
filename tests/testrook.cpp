@@ -5,7 +5,7 @@
 
 int main()
 {
-    uint64_t rookBoard = slowMoveGenerateRook(0,0);
+    uint64_t rookBoard = slowMoveGenerateRook(1,4);
     outputBoard(rookBoard);
 
     return 0;

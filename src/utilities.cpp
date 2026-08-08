@@ -3,7 +3,7 @@
 
 void outputBoard(uint64_t bitboard) {
     uint64_t bit = 1;
-    for (int y = 0; y < 8; y++) {
+    for (int y = 7; y >= 0; y--) {
         for (int x = 0; x < 8; x++) {
             int num = 8*y + x;
             if ((bitboard & (bit << num)) == 0) {

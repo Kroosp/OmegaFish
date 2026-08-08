@@ -6,6 +6,7 @@ OmegaFish is a chess bot
 
 Install the following:
  - CMake
+ - Standard C++ libraries
  
 # To Compile:
 

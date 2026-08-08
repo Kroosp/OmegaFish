@@ -92,6 +92,7 @@ void initializeQueenMoves() {
         queenMoves[i] = bishopMoves[i] | rookMoves[i];
     }
 }
+
 uint64_t slowMoveGenerateRook(int position, uint64_t fullBoard) {
     int pos_x = position % 8;
     int pos_y = position / 8;
@@ -137,4 +138,55 @@ uint64_t slowMoveGenerateRook(int position, uint64_t fullBoard) {
     }
 
     return toFillBoard;
+}
+
+uint64_t slowMoveGenerateBishop(int position, uint64_t fullBoard) {
+    int pos_x = position % 8;
+    int pos_y = position / 8;
+    uint64_t bit = 0;
+    uint64_t toFillBoard = 0;
+    int foundRU = 0;
+    int foundLU = 0;
+    int foundRD = 0;
+    int foundLD = 0;
+    for (int j = 1; j < 8; j++) {
+        if ((pos_x + j < 8) && (pos_y + j < 8) && (foundRU == 0)) {
+                bit = 1ULL << position + 9*j;
+                toFillBoard |= (~fullBoard & bit);
+                if ((~fullBoard & bit) == 0) {
+                    toFillBoard |= bit;
+                    foundRU = 1;
+                }
+            }
+            if ((pos_x - j >= 0) && (pos_y + j < 8) && (foundLU == 0)) {
+                bit = 1ULL << position + 7*j;
+                toFillBoard |= (~fullBoard & bit);
+                if ((~fullBoard & bit) == 0) {
+                    toFillBoard |= bit;
+                    foundLU = 1;
+                }
+            }
+            if ((pos_x + j < 8) && (pos_y - j >= 0) && (foundRD == 0)) {
+                bit = 1ULL << position - 7*j;
+                toFillBoard |= (~fullBoard & bit);
+                if ((~fullBoard & bit) == 0) {
+                    toFillBoard |= bit;
+                    foundRD = 1;
+                }
+            }
+            if ((pos_x - j >= 0) && (pos_y - j >= 0) && (foundLD == 0)) {
+                bit = 1ULL << position - 9*j;
+                toFillBoard |= (~fullBoard & bit);
+                if ((~fullBoard & bit) == 0) {
+                    toFillBoard |= bit;
+                    foundLD = 1;
+                }
+            }
+    }
+
+    return toFillBoard;
+}
+
+uint64_t slowMoveGenerateQueen(int position, uint64_t fullBoard) {
+    return slowMoveGenerateRook(position, fullBoard) | slowMoveGenerateBishop(position, fullBoard);
 }

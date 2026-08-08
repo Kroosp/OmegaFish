@@ -14,4 +14,5 @@ void outputBoard(uint64_t bitboard) {
         }
         std::cout << std::endl;
     }
+    std::cout << std::endl;
 }

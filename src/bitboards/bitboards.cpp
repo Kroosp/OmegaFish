@@ -92,4 +92,49 @@ void initializeQueenMoves() {
         queenMoves[i] = bishopMoves[i] | rookMoves[i];
     }
 }
+uint64_t slowMoveGenerateRook(int position, uint64_t fullBoard) {
+    int pos_x = position % 8;
+    int pos_y = position / 8;
+    uint64_t bit = 0;
+    uint64_t toFillBoard = 0;
+    int foundRight = 0;
+    int foundLeft = 0;
+    int foundUp = 0;
+    int foundDown = 0;
+    for (int j = 1; j < 8; j++) {
+        if ((pos_x + j < 8) && (foundRight == 0)) {
+                bit = 1ULL << position + j;
+                toFillBoard |= (~fullBoard & bit);
+                if ((~fullBoard & bit) == 0) {
+                    toFillBoard |= bit;
+                    foundRight = 1;
+                }
+            }
+            if ((pos_x - j >= 0) && (foundLeft == 0)) {
+                bit = 1ULL << position - j;
+                toFillBoard |= (~fullBoard & bit);
+                if ((~fullBoard & bit) == 0) {
+                    toFillBoard |= bit;
+                    foundLeft = 1;
+                }
+            }
+            if ((pos_y + j < 8) && (foundUp == 0)) {
+                bit = 1ULL << position + 8*j;
+                toFillBoard |= (~fullBoard & bit);
+                if ((~fullBoard & bit) == 0) {
+                    toFillBoard |= bit;
+                    foundUp = 1;
+                }
+            }
+            if ((pos_y - j >= 0) && (foundDown == 0)) {
+                bit = 1ULL << position - 8*j;
+                toFillBoard |= (~fullBoard & bit);
+                if ((~fullBoard & bit) == 0) {
+                    toFillBoard |= bit;
+                    foundDown = 1;
+                }
+            }
+    }
 
+    return toFillBoard;
+}

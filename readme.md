@@ -23,3 +23,6 @@ Or this:
 cmake -S . -B build
 cmake --build build
 .\build\Debug\OmegaFish.exe
+
+# Important info:
+

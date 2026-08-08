@@ -10,3 +10,9 @@ extern std::uint64_t WhitePawnMoves[64];
 extern std::uint64_t BlackPawnMoves[64]; 
 extern std::uint64_t WhitePawnAttacks[64]; 
 extern std::uint64_t BlackPawnAttacks[64]; 
+
+void initializeKnightMoves();
+void initializeBishopMoves();
+void initializeRookMoves();
+void initializeQueenMoves();
+uint64_t slowMoveGenerateRook(int position, uint64_t fullBoard);

@@ -33,3 +33,13 @@ uint64_t slowMoveGenerateQueen(int position, uint64_t fullBoard);
 SLow implementation for a board for a sliding piece, given its position and the rest of the board.
 Returns an attack bitboard.
 */
+
+extern std::uint64_t rookMagicNumbers[64];
+extern std::uint64_t bishopMagicNumbers[64];
+extern std::uint64_t slidingRookMoves[64][4096];
+int mapRookPositionToIndex(int position, uint64_t occupancyBoard, int magicNumber);
+
+
+/*
+
+*/

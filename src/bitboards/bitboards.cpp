@@ -5,7 +5,8 @@ std::uint64_t bishopMoves[64];
 std::uint64_t rookMoves[64];
 std::uint64_t queenMoves[64];
 
-void initializeKnightMoves() {
+void initializeKnightMoves() 
+{
     for (int i = 0; i < 64; i++) {
         knightMoves[i] = 0;
         if (i % 8 > 1) {
@@ -44,7 +45,8 @@ void initializeKnightMoves() {
     }
 }
 
-void initializeBishopMoves() {
+void initializeBishopMoves() 
+{
     for (int i = 0; i < 64; i++) {
         bishopMoves[i] = 0;
         int pos_x = i % 8;
@@ -63,9 +65,12 @@ void initializeBishopMoves() {
                 bishopMoves[i] |= 1ULL << (i - j * 9);
             }
         }
-}}
+    }   
+}
 
-void initializeRookMoves() {
+
+void initializeRookMoves() 
+{
     for (int i = 0; i < 64; i++) {
         rookMoves[i] = 0;
         int pos_x = i % 8;
@@ -87,13 +92,15 @@ void initializeRookMoves() {
     }
 }
 
-void initializeQueenMoves() {
+void initializeQueenMoves() 
+{
     for (int i = 0; i < 64; i++) {
         queenMoves[i] = bishopMoves[i] | rookMoves[i];
     }
 }
 
-uint64_t slowMoveGenerateRook(int position, uint64_t fullBoard) {
+uint64_t slowMoveGenerateRook(int position, uint64_t fullBoard) 
+{
     int pos_x = position % 8;
     int pos_y = position / 8;
     uint64_t bit = 0;
@@ -140,7 +147,8 @@ uint64_t slowMoveGenerateRook(int position, uint64_t fullBoard) {
     return toFillBoard;
 }
 
-uint64_t slowMoveGenerateBishop(int position, uint64_t fullBoard) {
+uint64_t slowMoveGenerateBishop(int position, uint64_t fullBoard) 
+{
     int pos_x = position % 8;
     int pos_y = position / 8;
     uint64_t bit = 0;
@@ -187,6 +195,17 @@ uint64_t slowMoveGenerateBishop(int position, uint64_t fullBoard) {
     return toFillBoard;
 }
 
-uint64_t slowMoveGenerateQueen(int position, uint64_t fullBoard) {
+uint64_t slowMoveGenerateQueen(int position, uint64_t fullBoard) 
+{
     return slowMoveGenerateRook(position, fullBoard) | slowMoveGenerateBishop(position, fullBoard);
 }
+ 
+
+
+int mapRookPositionToIndex(int position, uint64_t occupancyBoard, int magicNumber)
+{
+    uint64_t occupancyBoardFilter = (rookMoves[position] & 0x007E7E7E7E7E7E00);
+    return (occupancyBoardFilter * magicNumber) & (0xFFF);
+}
+
+int verifyMagicNumber()
